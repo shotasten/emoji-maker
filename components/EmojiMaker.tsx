@@ -68,7 +68,6 @@ function Logo() {
 
 // ── Template colors ───────────────────────────────────────────
 const TEMPLATE_COLORS = [
-  { name: "黒", value: "#111827" },
   { name: "赤", value: "#EF4444" },
   { name: "オレンジ", value: "#F97316" },
   { name: "アンバー", value: "#F59E0B" },
@@ -78,15 +77,16 @@ const TEMPLATE_COLORS = [
   { name: "バイオレット", value: "#8B5CF6" },
   { name: "ピンク", value: "#EC4899" },
   { name: "白", value: "#FFFFFF" },
+  { name: "黒", value: "#111827" },
 ];
 
 export default function EmojiMaker() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const [text, setText] = useState("絵文字");
+  const [text, setText] = useState("絵文字\nメーカー");
   const [fontId, setFontId] = useState<FontId>("rounded");
-  const [textColor, setTextColor] = useState(TEMPLATE_COLORS[0].value);
+  const [textColor, setTextColor] = useState("#06B6D4");
   const [bgColor, setBgColor] = useState("");
   const [strokeColor, setStrokeColor] = useState("#000000");
   const [strokeWidth, setStrokeWidth] = useState(0);
