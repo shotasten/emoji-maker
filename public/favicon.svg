@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" rx="10" fill="#FF2D78"/>
+  <text
+    x="24" y="39"
+    text-anchor="middle"
+    font-family="'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', 'M+ 1p', sans-serif"
+    font-weight="900"
+    font-size="36"
+    fill="white"
+    stroke="#1a1a2e"
+    stroke-width="3"
+    stroke-linejoin="round"
+    paint-order="stroke fill"
+  >絵</text>
+</svg>
