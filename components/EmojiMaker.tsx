@@ -138,14 +138,14 @@ export default function EmojiMaker() {
       const fontSize = 44;
       ctx.font = `900 ${fontSize}px "M PLUS Rounded 1c"`;
       ctx.textAlign = "center";
-      ctx.textBaseline = "alphabetic";
+      ctx.textBaseline = "middle";
 
       ctx.strokeStyle = "#1a1a2e";
       ctx.lineWidth = 4;
       ctx.lineJoin = "round";
-      ctx.strokeText("絵", SZ / 2, SZ * 0.8);
+      ctx.strokeText("絵", SZ / 2, SZ / 2);
       ctx.fillStyle = "white";
-      ctx.fillText("絵", SZ / 2, SZ * 0.8);
+      ctx.fillText("絵", SZ / 2, SZ / 2);
 
       let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null;
       if (!link) {

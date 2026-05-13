@@ -1,0 +1,13 @@
+{
+  "name": "絵文字メーカー",
+  "short_name": "絵文字メーカー",
+  "description": "Slack・Discord・Teams用カスタム絵文字を無料で簡単作成",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#FF2D78",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
