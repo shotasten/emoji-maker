@@ -12,6 +12,59 @@ const FONTS = [
 type FontId = (typeof FONTS)[number]["id"];
 type ColorTarget = "text" | "bg" | "stroke";
 
+function ChatMockup({ url, theme }: { url: string; theme: "light" | "dark" }) {
+  const dark = theme === "dark";
+  const border = dark ? "1px solid #1E1F22" : "1px solid #E8E8E8";
+  const reactionBg = dark ? "#2B2D31" : "#F0F0F0";
+  const reactionBorder = dark ? "1px solid #4F545C" : "1px solid #D1D1D1";
+  const reactionText = dark ? "#DCDDDE" : "#444444";
+
+  return (
+    <div style={{ border, background: dark ? "#313338" : "#FFFFFF", borderRadius: 8, padding: "8px 10px" }}>
+      <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+        <div
+          style={{
+            width: 32, height: 32,
+            borderRadius: dark ? "50%" : 6,
+            background: dark ? "#5865F2" : "#4A154B",
+            flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 13, fontWeight: 700, color: "white", fontFamily: "sans-serif",
+          }}
+        >
+          U
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 2 }}>
+            <span style={{ color: dark ? "#FFFFFF" : "#1264A3", fontWeight: 700, fontSize: 13, fontFamily: "sans-serif" }}>
+              ユーザー
+            </span>
+            <span className="hidden lg:inline" style={{ color: dark ? "#949BA4" : "#616061", fontSize: 11, fontFamily: "sans-serif" }}>
+              12:34
+            </span>
+          </div>
+          <div style={{ color: dark ? "#DCDDDE" : "#1D1C1D", fontSize: 14, lineHeight: "20px", fontFamily: "sans-serif", marginBottom: 6 }}>
+            デプロイ完了！
+          </div>
+          {url && (
+            <div
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 4,
+                background: reactionBg, border: reactionBorder,
+                borderRadius: dark ? 8 : 4,
+                padding: "2px 7px 2px 5px",
+                cursor: "default",
+              }}
+            >
+              <img src={url} width={18} height={18} style={{ display: "block" }} alt="" />
+              <span style={{ fontSize: 12, fontWeight: 600, color: reactionText, fontFamily: "sans-serif", lineHeight: 1 }}>1</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Header logo ──────────────────────────────────────────────
 const LOGO_CHARS = [
   { char: "絵", bg: "#FF2D78" },
@@ -90,6 +143,7 @@ export default function EmojiMaker() {
   const [bgColor, setBgColor] = useState("");
   const [strokeColor, setStrokeColor] = useState("#000000");
   const [strokeWidth, setStrokeWidth] = useState(0);
+  const [previewUrl, setPreviewUrl] = useState("");
 
   const [colorTarget, setColorTarget] = useState<ColorTarget>("text");
 
@@ -103,6 +157,7 @@ export default function EmojiMaker() {
     await renderEmoji(canvas, {
       text, fontFamily, fontWeight, bgColor, textColor, strokeWidth, strokeColor,
     });
+    setPreviewUrl(canvas.toDataURL("image/png"));
   }, [text, fontFamily, fontWeight, bgColor, textColor, strokeWidth, strokeColor]);
 
   useEffect(() => {
@@ -208,35 +263,45 @@ export default function EmojiMaker() {
 
       <main className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-4xl mx-auto w-full">
         {/* Preview */}
-        <aside className="lg:w-64 flex flex-col items-center gap-4 order-first">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 w-full flex flex-col items-center gap-4 sticky top-6">
-            <p className="text-sm font-semibold text-gray-700 self-start">
-              プレビュー
-            </p>
-
-            <div
-              className="rounded-xl overflow-hidden shadow-inner"
-              style={{
-                backgroundImage:
-                  "repeating-conic-gradient(#e5e7eb 0% 25%, white 0% 50%)",
-                backgroundSize: "16px 16px",
-              }}
-            >
-              <canvas
-                ref={canvasRef}
-                width={CANVAS_SIZE}
-                height={CANVAS_SIZE}
-                className="block"
-                style={{ width: 216, height: 216 }}
-              />
+        <aside className="lg:w-64 order-first">
+          <div className="grid grid-cols-2 gap-3 lg:flex lg:flex-col lg:gap-4 lg:sticky lg:top-6">
+            {/* Canvas card */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3">
+              <p className="text-sm font-semibold text-gray-700 self-start">プレビュー</p>
+              <div
+                className="w-full aspect-square rounded-xl overflow-hidden shadow-inner"
+                style={{
+                  backgroundImage: "repeating-conic-gradient(#e5e7eb 0% 25%, white 0% 50%)",
+                  backgroundSize: "16px 16px",
+                }}
+              >
+                <canvas
+                  ref={canvasRef}
+                  width={CANVAS_SIZE}
+                  height={CANVAS_SIZE}
+                  className="block w-full h-full"
+                />
+              </div>
+              <button
+                onClick={handleDownload}
+                className="w-full bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm"
+              >
+                ダウンロード
+              </button>
             </div>
 
-            <button
-              onClick={handleDownload}
-              className="w-full bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold text-sm py-3 rounded-xl transition shadow-sm"
-            >
-              ダウンロード
-            </button>
+            {/* Chat preview card */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
+              <p className="text-sm font-semibold text-gray-700">チャット</p>
+              <div className="flex flex-col gap-1.5">
+                <p className="text-[10px] text-gray-400 font-medium">ライト</p>
+                <ChatMockup url={previewUrl} theme="light" />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <p className="text-[10px] text-gray-400 font-medium">ダーク</p>
+                <ChatMockup url={previewUrl} theme="dark" />
+              </div>
+            </div>
           </div>
         </aside>
 
