@@ -1,6 +1,5 @@
 # 絵文字メーカー
 
-![絵文字メーカー](public/og-image.png)
 
 <a href="https://emoji-maker.shotaste.com"><img src="public/cho-kantan.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/shunkan-seisei.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/emoji.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/maker.png" width="23%"></a>
 
