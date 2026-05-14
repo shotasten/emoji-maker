@@ -1,7 +1,7 @@
 # 絵文字メーカー
 
 
-<img src="public/cho-kantan.png" width="23%"><img src="public/shunkan-seisei.png" width="23%"><img src="public/emoji.png" width="23%"><img src="public/maker.png" width="23%">
+<a href="https://emoji-maker.shotaste.com"><img src="public/cho-kantan.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/shunkan-seisei.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/emoji.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/maker.png" width="23%"></a>
 
 https://emoji-maker.shotaste.com
 
