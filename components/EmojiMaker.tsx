@@ -300,7 +300,7 @@ export default function EmojiMaker() {
 
             {/* Chat preview card */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
-              <p className="text-sm font-semibold text-gray-700">チャット</p>
+              <p className="text-sm font-semibold text-gray-700">使用イメージ</p>
               <div className="flex flex-col gap-1.5">
                 <p className="text-[10px] text-gray-400 font-medium">ライト</p>
                 <ChatMockup url={previewUrl} theme="light" />
