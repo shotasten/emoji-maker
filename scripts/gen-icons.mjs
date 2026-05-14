@@ -11,7 +11,7 @@ const tmp = join(__dirname, "MPlusRounded1c-900.ttf");
 
 // Convert woff2 → ttf so node-canvas can register it
 const woff2Buf = readFileSync(
-  nm("@fontsource", "m-plus-rounded-1c", "files", "m-plus-rounded-1c-105-900-normal.woff2")
+  nm("@fontsource", "m-plus-rounded-1c", "files", "m-plus-rounded-1c-japanese-900-normal.woff2")
 );
 const ttfBuf = await decompress(woff2Buf);
 writeFileSync(tmp, ttfBuf);
@@ -30,13 +30,17 @@ function drawIcon(size) {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
+  ctx.textBaseline = "alphabetic";
+  const m = ctx.measureText("絵");
+  const y = size / 2 + m.actualBoundingBoxAscent - (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) / 2;
+
   ctx.strokeStyle = "#1a1a2e";
   ctx.lineWidth = Math.round(size * 0.065);
   ctx.lineJoin = "round";
-  ctx.strokeText("絵", size / 2, size / 2);
+  ctx.strokeText("絵", size / 2, y);
 
   ctx.fillStyle = "white";
-  ctx.fillText("絵", size / 2, size / 2);
+  ctx.fillText("絵", size / 2, y);
 
   return cv.toBuffer("image/png");
 }

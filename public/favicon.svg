@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <rect width="48" height="48" rx="10" fill="#FF2D78"/>
   <text
-    x="24" y="24"
+    x="24" y="21"
     text-anchor="middle"
     dominant-baseline="central"
     font-family="'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', 'M+ 1p', sans-serif"
