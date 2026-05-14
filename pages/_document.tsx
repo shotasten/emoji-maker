@@ -24,7 +24,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@900&family=Shippori+Mincho+B1:wght@800&family=Dela+Gothic+One&display=swap"
           rel="stylesheet"
         />
       </Head>

@@ -3,7 +3,7 @@ import EmojiMaker from "@/components/EmojiMaker";
 
 const SITE_URL = "https://emoji-maker.shotaste.com";
 const TITLE = "絵文字メーカー｜Slack・Discord用カスタム絵文字を無料作成";
-const DESCRIPTION = "テキストを入力するだけでSlack・Discord・Teams用のオリジナル絵文字が無料で作れます。フォントや色、縁取りをカスタマイズしてPNGでダウンロード。";
+const DESCRIPTION = "テキストを入力するだけでSlack・Discord・Teams用のオリジナル絵文字が無料で作れます。リアルタイムでプレビューを確認しながら、フォントや色、縁取りをカスタマイズしてPNGでダウンロード。";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export default function Home() {

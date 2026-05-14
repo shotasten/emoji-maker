@@ -2,7 +2,7 @@
 
 https://emoji-maker.shotaste.com
 
-Slack・Discord・Teams のカスタム絵文字をブラウザで作れるツール。
+Slack・Discord・Teams のカスタム絵文字をブラウザで作れるツール。リアルタイムプレビューで確認しながらデザインできる。
 
 ## 機能
 

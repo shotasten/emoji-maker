@@ -5,7 +5,9 @@ import { renderEmoji, CANVAS_SIZE } from "@/lib/renderer";
 import ColorPicker from "@/components/ColorPicker";
 
 const FONTS = [
-  { id: "rounded", name: "Rounded M+ 1p", css: "M PLUS Rounded 1c", ctxWeight: "900" },
+  { id: "rounded", name: "丸ゴシック体", subname: "M PLUS Rounded 1c", css: "M PLUS Rounded 1c", ctxWeight: "900", recommended: true },
+  { id: "mincho", name: "明朝体", subname: "Shippori Mincho B1", css: "Shippori Mincho B1", ctxWeight: "800" },
+  { id: "block", name: "ブロック体", subname: "Dela Gothic One", css: "Dela Gothic One", ctxWeight: "400" },
   { id: "tanuki", name: "たぬき油性マジック", css: "TanukiMagic", ctxWeight: "normal" },
 ] as const;
 
@@ -341,11 +343,19 @@ export default function EmojiMaker() {
                   >
                     あA
                   </span>
-                  <span className="text-sm text-gray-700 font-medium">
+                  <span className="text-sm text-gray-700 font-medium flex items-center gap-1.5 flex-wrap">
                     {f.name}
+                    {"subname" in f && (
+                      <span className="text-xs text-gray-400 font-normal">（{f.subname}）</span>
+                    )}
+                    {"recommended" in f && f.recommended && (
+                      <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                        おすすめ
+                      </span>
+                    )}
                   </span>
                   {fontId === f.id && (
-                    <span className="ml-auto text-indigo-500 text-xs font-semibold">
+                    <span className="ml-auto text-indigo-500 text-xs font-semibold flex-shrink-0">
                       選択中
                     </span>
                   )}
