@@ -10,7 +10,7 @@ const nm = (...parts) => join(__dirname, "..", "node_modules", ...parts);
 const tmp = join(__dirname, "MPlusRounded1c-900.ttf");
 
 const woff2Buf = readFileSync(
-  nm("@fontsource", "m-plus-rounded-1c", "files", "m-plus-rounded-1c-105-900-normal.woff2")
+  nm("@fontsource", "m-plus-rounded-1c", "files", "m-plus-rounded-1c-japanese-900-normal.woff2")
 );
 const ttfBuf = await decompress(woff2Buf);
 writeFileSync(tmp, ttfBuf);
