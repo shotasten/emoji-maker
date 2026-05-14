@@ -264,15 +264,14 @@ export default function EmojiMaker() {
         </p>
       </header>
 
-      <main className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-5xl mx-auto w-full">
+      {/* モバイル: 2列グリッド(プレビュー|使用イメージ) + コントロール全幅
+           デスクトップ: 3列グリッド [14rem | 1fr | 14rem] */}
+      <main className="flex-1 grid grid-cols-2 lg:grid-cols-[14rem_1fr_14rem] gap-6 p-6 max-w-5xl mx-auto w-full items-start">
 
-        {/* モバイル: 横並び / デスクトップ: contents で左右カラムに分散 */}
-        <div className="flex gap-3 lg:contents">
-
-          {/* 左: プレビュー (desktop sticky) */}
-          <aside className="flex-1 min-w-0 lg:w-56 lg:flex-none lg:order-1 overflow-hidden">
-            <div className="lg:sticky lg:top-6 flex flex-col gap-3 w-full">
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3 w-full overflow-hidden">
+          {/* 左: プレビュー */}
+          <aside className="col-start-1 row-start-1">
+            <div className="lg:sticky lg:top-6 flex flex-col gap-3">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3 overflow-hidden">
                 <p className="text-sm font-semibold text-gray-700 self-start">プレビュー</p>
                 <div
                   className="w-full aspect-square rounded-xl overflow-hidden shadow-inner"
@@ -306,8 +305,8 @@ export default function EmojiMaker() {
           </aside>
 
           {/* 右: 使用イメージ (desktop sticky) */}
-          <aside className="flex-1 min-w-0 lg:w-56 lg:flex-none lg:order-3 overflow-hidden">
-            <div className="lg:sticky lg:top-6 w-full">
+          <aside className="col-start-2 row-start-1 lg:col-start-3">
+            <div className="lg:sticky lg:top-6">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
                 <p className="text-sm font-semibold text-gray-700">使用イメージ</p>
                 <div className="flex flex-col gap-1.5">
@@ -322,10 +321,8 @@ export default function EmojiMaker() {
             </div>
           </aside>
 
-        </div>
-
         {/* 中央: コントロール */}
-        <section className="flex-1 flex flex-col gap-5 lg:order-2">
+        <section className="col-span-2 row-start-2 lg:col-span-1 lg:col-start-2 lg:row-start-1 flex flex-col gap-5">
           {/* Text input */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
             <label className="block text-sm font-semibold text-gray-700 mb-2">

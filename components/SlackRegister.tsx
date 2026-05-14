@@ -177,7 +177,7 @@ export default function SlackRegister({ canvasRef, defaultName = "" }: Props) {
                   setEmojiName(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))
                 }
                 placeholder="emoji-name"
-                className={`flex-1 text-sm border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-pink-300 ${
+                className={`flex-1 min-w-0 text-sm border rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-pink-300 ${
                   emojiName && !canSubmit ? "border-red-300 bg-red-50" : "border-gray-200"
                 }`}
               />
