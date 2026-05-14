@@ -284,6 +284,12 @@ export default function EmojiMaker() {
                   className="block w-full h-full"
                 />
               </div>
+              <div className="text-center leading-tight">
+                <p className="text-xs text-gray-400">フォント：<span className="whitespace-nowrap">{selectedFont.name}</span></p>
+                {"subname" in selectedFont && (
+                  <p className="text-xs text-gray-400 whitespace-nowrap">（{selectedFont.subname}）</p>
+                )}
+              </div>
               <button
                 onClick={handleDownload}
                 className="w-full bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm"
@@ -343,11 +349,8 @@ export default function EmojiMaker() {
                   >
                     あA
                   </span>
-                  <span className="text-sm text-gray-700 font-medium flex items-center gap-1.5 flex-wrap">
+                  <span className="text-sm text-gray-700 font-medium flex items-center gap-1.5">
                     {f.name}
-                    {"subname" in f && (
-                      <span className="text-xs text-gray-400 font-normal">（{f.subname}）</span>
-                    )}
                     {"recommended" in f && f.recommended && (
                       <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
                         おすすめ
