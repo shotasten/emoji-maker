@@ -2,7 +2,7 @@
 
 ![絵文字メーカー](public/og-image.png)
 
-[![超簡単](public/cho-kantan.png)](https://emoji-maker.shotaste.com)[![瞬間生成](public/shunkan-seisei.png)](https://emoji-maker.shotaste.com)[![絵文字](public/emoji.png)](https://emoji-maker.shotaste.com)[![メーカー](public/maker.png)](https://emoji-maker.shotaste.com)
+<a href="https://emoji-maker.shotaste.com"><img src="public/cho-kantan.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/shunkan-seisei.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/emoji.png" width="23%"></a><a href="https://emoji-maker.shotaste.com"><img src="public/maker.png" width="23%"></a>
 
 https://emoji-maker.shotaste.com
 
