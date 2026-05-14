@@ -1,5 +1,10 @@
 # 絵文字メーカー
 
+![絵文字メーカー](public/og-image.png)
+
+[![超簡単](public/cho-kantan.png)](https://emoji-maker.shotaste.com)
+[![瞬間生成](public/shunkan-seisei.png)](https://emoji-maker.shotaste.com)
+
 https://emoji-maker.shotaste.com
 
 Slack・Discord・Teams のカスタム絵文字をブラウザで作れるツール。リアルタイムプレビューで確認しながらデザインできる。
