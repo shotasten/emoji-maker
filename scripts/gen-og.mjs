@@ -51,7 +51,10 @@ const TILE = 96;
 const GAP = 10;
 const totalW = CHARS.length * TILE + (CHARS.length - 1) * GAP;
 const startX = (W - totalW) / 2;
-const tileY = 140;
+const taglineGap = 72;
+const taglineH = 28;
+const contentH = TILE + taglineGap + taglineH;
+const tileY = Math.round((H - contentH) / 2);
 const radius = 18;
 
 for (let i = 0; i < CHARS.length; i++) {
