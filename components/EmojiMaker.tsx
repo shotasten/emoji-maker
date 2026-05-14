@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { renderEmoji, CANVAS_SIZE } from "@/lib/renderer";
 import ColorPicker from "@/components/ColorPicker";
+import SlackRegister from "@/components/SlackRegister";
 
 const FONTS = [
   { id: "rounded", name: "丸ゴシック体", subname: "M PLUS Rounded 1c", css: "M PLUS Rounded 1c", ctxWeight: "900", recommended: true },
@@ -263,58 +264,68 @@ export default function EmojiMaker() {
         </p>
       </header>
 
-      <main className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-4xl mx-auto w-full">
-        {/* Preview */}
-        <aside className="lg:w-64 order-first">
-          <div className="grid grid-cols-2 gap-3 lg:flex lg:flex-col lg:gap-4 lg:sticky lg:top-6">
-            {/* Canvas card */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3">
-              <p className="text-sm font-semibold text-gray-700 self-start">プレビュー</p>
-              <div
-                className="w-full aspect-square rounded-xl overflow-hidden shadow-inner"
-                style={{
-                  backgroundImage: "repeating-conic-gradient(#e5e7eb 0% 25%, white 0% 50%)",
-                  backgroundSize: "16px 16px",
-                }}
-              >
-                <canvas
-                  ref={canvasRef}
-                  width={CANVAS_SIZE}
-                  height={CANVAS_SIZE}
-                  className="block w-full h-full"
-                />
-              </div>
-              <div className="text-center leading-tight">
-                <p className="text-xs text-gray-400">フォント：<span className="whitespace-nowrap">{selectedFont.name}</span></p>
-                {"subname" in selectedFont && (
-                  <p className="text-xs text-gray-400 whitespace-nowrap">（{selectedFont.subname}）</p>
-                )}
-              </div>
-              <button
-                onClick={handleDownload}
-                className="w-full bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm"
-              >
-                ダウンロード
-              </button>
-            </div>
+      <main className="flex-1 flex flex-col lg:flex-row gap-6 p-6 max-w-5xl mx-auto w-full">
 
-            {/* Chat preview card */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
-              <p className="text-sm font-semibold text-gray-700">使用イメージ</p>
-              <div className="flex flex-col gap-1.5">
-                <p className="text-[10px] text-gray-400 font-medium">ライト</p>
-                <ChatMockup url={previewUrl} theme="light" />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <p className="text-[10px] text-gray-400 font-medium">ダーク</p>
-                <ChatMockup url={previewUrl} theme="dark" />
+        {/* モバイル: 横並び / デスクトップ: contents で左右カラムに分散 */}
+        <div className="flex gap-3 lg:contents">
+
+          {/* 左: プレビュー (desktop sticky) */}
+          <aside className="flex-1 min-w-0 lg:w-56 lg:flex-none lg:order-1 overflow-hidden">
+            <div className="lg:sticky lg:top-6 flex flex-col gap-3 w-full">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3 w-full overflow-hidden">
+                <p className="text-sm font-semibold text-gray-700 self-start">プレビュー</p>
+                <div
+                  className="w-full aspect-square rounded-xl overflow-hidden shadow-inner"
+                  style={{
+                    backgroundImage: "repeating-conic-gradient(#e5e7eb 0% 25%, white 0% 50%)",
+                    backgroundSize: "16px 16px",
+                  }}
+                >
+                  <canvas
+                    ref={canvasRef}
+                    width={CANVAS_SIZE}
+                    height={CANVAS_SIZE}
+                    className="block w-full h-full"
+                  />
+                </div>
+                <div className="text-center leading-tight">
+                  <p className="text-xs text-gray-400">フォント：<span className="whitespace-nowrap">{selectedFont.name}</span></p>
+                  {"subname" in selectedFont && (
+                    <p className="text-xs text-gray-400 whitespace-nowrap">（{selectedFont.subname}）</p>
+                  )}
+                </div>
+                <button
+                  onClick={handleDownload}
+                  className="w-full bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-semibold text-sm py-2.5 rounded-xl transition shadow-sm"
+                >
+                  ダウンロード
+                </button>
+                <SlackRegister canvasRef={canvasRef} defaultName={text} />
               </div>
             </div>
-          </div>
-        </aside>
+          </aside>
 
-        {/* Controls */}
-        <section className="flex-1 flex flex-col gap-5">
+          {/* 右: 使用イメージ (desktop sticky) */}
+          <aside className="flex-1 min-w-0 lg:w-56 lg:flex-none lg:order-3 overflow-hidden">
+            <div className="lg:sticky lg:top-6 w-full">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
+                <p className="text-sm font-semibold text-gray-700">使用イメージ</p>
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-[10px] text-gray-400 font-medium">ライト</p>
+                  <ChatMockup url={previewUrl} theme="light" />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-[10px] text-gray-400 font-medium">ダーク</p>
+                  <ChatMockup url={previewUrl} theme="dark" />
+                </div>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+
+        {/* 中央: コントロール */}
+        <section className="flex-1 flex flex-col gap-5 lg:order-2">
           {/* Text input */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
             <label className="block text-sm font-semibold text-gray-700 mb-2">
