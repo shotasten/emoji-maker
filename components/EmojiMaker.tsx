@@ -266,12 +266,12 @@ export default function EmojiMaker() {
 
       {/* モバイル: 2列グリッド(プレビュー|使用イメージ) + コントロール全幅
            デスクトップ: 3列グリッド [14rem | 1fr | 14rem] */}
-      <main className="flex-1 grid grid-cols-2 lg:grid-cols-[14rem_1fr_14rem] gap-6 p-6 max-w-5xl mx-auto w-full items-start">
+      <main className="flex-1 grid grid-cols-2 lg:grid-cols-[14rem_1fr_14rem] gap-6 p-6 max-w-5xl mx-auto w-full lg:items-start">
 
           {/* 左: プレビュー */}
           <aside className="col-start-1 row-start-1">
-            <div className="lg:sticky lg:top-6 flex flex-col gap-3">
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3 overflow-hidden">
+            <div className="lg:sticky lg:top-6 flex flex-col gap-3 h-full lg:h-auto">
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex flex-col items-center gap-3 overflow-hidden h-full lg:h-auto">
                 <p className="text-sm font-semibold text-gray-700 self-start">プレビュー</p>
                 <div
                   className="w-full aspect-square rounded-xl overflow-hidden shadow-inner"
