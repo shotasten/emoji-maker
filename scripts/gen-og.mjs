@@ -82,19 +82,14 @@ for (let i = 0; i < CHARS.length; i++) {
   ctx.fillText(CHARS[i].char, x + TILE / 2, tileY + TILE / 2);
 }
 
-// App name
-ctx.font = `900 64px "MPlusRounded1c"`;
-ctx.textAlign = "center";
-ctx.textBaseline = "middle";
-ctx.fillStyle = "#111827";
-ctx.strokeStyle = "transparent";
-ctx.lineWidth = 0;
-ctx.fillText("絵文字メーカー", W / 2, tileY + TILE + 72);
-
 // Tagline
 ctx.font = `900 28px "MPlusRounded1c"`;
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
 ctx.fillStyle = "#6B7280";
-ctx.fillText("Slack・Discord・Teams のカスタム絵文字を無料で簡単作成", W / 2, tileY + TILE + 140);
+ctx.strokeStyle = "transparent";
+ctx.lineWidth = 0;
+ctx.fillText("Slack・Discord・Teams のカスタム絵文字を無料で簡単作成", W / 2, tileY + TILE + 72);
 
 writeFileSync(pub("og-image.png"), cv.toBuffer("image/png"));
 console.log("✓ og-image.png");
