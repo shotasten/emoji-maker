@@ -125,17 +125,15 @@ export default function SlackRegister({ canvasRef, defaultName = "" }: Props) {
       </button>
 
       {!extInstalled && (
-        <p className="text-[11px] text-gray-400 text-center leading-snug">
-          <a
-            href="https://chromewebstore.google.com/detail/ojlgjoflihgjkgdmhhlpjhmlhjdpbikk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-gray-600"
-          >
-            Chrome 拡張機能
-          </a>
+        <a
+          href="https://chromewebstore.google.com/detail/ojlgjoflihgjkgdmhhlpjhmlhjdpbikk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full text-center px-3 py-2.5 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl text-xs text-indigo-700 leading-snug transition"
+        >
+          <span className="font-semibold underline underline-offset-2">Chrome 拡張機能</span>
           を入れると Slack に直接登録できます
-        </p>
+        </a>
       )}
 
       {extInstalled && open && (
