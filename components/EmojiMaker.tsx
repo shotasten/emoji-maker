@@ -378,7 +378,7 @@ export default function EmojiMaker() {
                         : <div key={i} className="w-9 h-9 rounded bg-gray-100 animate-pulse" />
                     ))}
                   </div>
-                  <span className="text-[10px] text-gray-700 font-medium text-center leading-tight">
+                  <span className="text-xs text-gray-700 font-medium text-center leading-tight">
                     {f.name}
                     {"recommended" in f && f.recommended && (
                       <span className="block text-amber-500">おすすめ</span>
@@ -470,24 +470,26 @@ export default function EmojiMaker() {
               </button>
             )}
 
-            {/* Stroke width — always rendered to avoid layout shift */}
-            <div className={`mt-3 pt-3 border-t border-gray-100 ${colorTarget === "stroke" ? "" : "invisible h-0 mt-0 pt-0 border-0 overflow-hidden"}`}>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-xs font-semibold text-gray-600">縁の太さ</p>
-                <span className="text-xs text-gray-500 font-medium">
-                  {strokeWidth === 0 ? "なし" : `${strokeWidth} px`}
-                </span>
-              </div>
-              <input
-                type="range"
-                min={0}
-                max={20}
-                step={1}
-                value={strokeWidth}
-                onChange={(e) => setStrokeWidth(Number(e.target.value))}
-                className="w-full accent-indigo-500"
-              />
+          </div>
+
+          {/* Stroke */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-gray-700">縁取り</p>
+              <span className="text-sm text-gray-500 font-medium">
+                {strokeWidth === 0 ? "なし" : `${strokeWidth} px`}
+              </span>
             </div>
+            <input
+              type="range"
+              min={0}
+              max={20}
+              step={1}
+              value={strokeWidth}
+              onChange={(e) => setStrokeWidth(Number(e.target.value))}
+              className="w-full accent-indigo-500"
+            />
+            <p className="text-xs text-gray-400 mt-2">縁の色は上の「縁色」タブで設定</p>
           </div>
         </section>
       </main>
