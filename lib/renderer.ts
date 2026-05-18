@@ -55,8 +55,8 @@ export async function renderEmoji(
 
   await ensureFontLoaded(fontFamily, fontWeight, trimmed);
 
-  // Base 2% padding + half stroke width so the outline never clips at the edge
-  const pad = Math.round(CANVAS_SIZE * 0.02) + Math.ceil(strokeWidth / 2);
+  // 2% base padding + full stroke width to guarantee the outline never clips
+  const pad = Math.round(CANVAS_SIZE * 0.02) + Math.ceil(strokeWidth);
   const aw = CANVAS_SIZE - pad * 2;
   const ah = CANVAS_SIZE - pad * 2;
 

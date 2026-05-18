@@ -110,7 +110,7 @@ export default function ColorPicker({ value, onChange }: Props) {
         ref={svRef}
         className="relative rounded-lg overflow-hidden cursor-crosshair select-none touch-none"
         style={{
-          height: 160,
+          height: 120,
           background: [
             "linear-gradient(to bottom, transparent 0%, #000 100%)",
             `linear-gradient(to right, #fff 0%, hsl(${h}, 100%, 50%) 100%)`,
@@ -137,7 +137,7 @@ export default function ColorPicker({ value, onChange }: Props) {
         ref={hueRef}
         className="relative rounded-full cursor-pointer select-none touch-none"
         style={{
-          height: 12,
+          height: 10,
           background:
             "linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)",
         }}
@@ -147,8 +147,8 @@ export default function ColorPicker({ value, onChange }: Props) {
         <div
           className="pointer-events-none absolute rounded-full border-2 border-white"
           style={{
-            width: 20,
-            height: 20,
+            width: 18,
+            height: 18,
             left: `${(h / 360) * 100}%`,
             top: "50%",
             transform: "translate(-50%, -50%)",

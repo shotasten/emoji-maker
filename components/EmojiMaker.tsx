@@ -412,7 +412,7 @@ export default function EmojiMaker() {
             </div>
 
             {/* Template swatches */}
-            <div className="grid grid-cols-5 gap-2 mb-4">
+            <div className="grid grid-cols-5 gap-1.5 mb-3">
               {TEMPLATE_COLORS.map((c) => {
                 const isSelected = currentTargetColor === c.value;
                 return (
@@ -468,7 +468,7 @@ export default function EmojiMaker() {
             <input
               type="range"
               min={0}
-              max={12}
+              max={20}
               step={1}
               value={strokeWidth}
               onChange={(e) => setStrokeWidth(Number(e.target.value))}
