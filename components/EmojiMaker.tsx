@@ -483,7 +483,7 @@ export default function EmojiMaker() {
             <input
               type="range"
               min={0}
-              max={20}
+              max={12}
               step={1}
               value={strokeWidth}
               onChange={(e) => setStrokeWidth(Number(e.target.value))}
