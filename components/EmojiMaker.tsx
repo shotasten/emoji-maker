@@ -144,9 +144,9 @@ export default function EmojiMaker() {
 
   const [text, setText] = useState("絵文字\nメーカー");
   const [fontId, setFontId] = useState<FontId>("rounded");
-  const [textColor, setTextColor] = useState("#06B6D4");
+  const [textColor, setTextColor] = useState("#EC4899");
   const [bgColor, setBgColor] = useState("");
-  const [strokeColor, setStrokeColor] = useState("#000000");
+  const [strokeColor, setStrokeColor] = useState("#06B6D4");
   const [strokeWidth, setStrokeWidth] = useState(0);
   const [previewUrl, setPreviewUrl] = useState("");
 
@@ -469,26 +469,24 @@ export default function EmojiMaker() {
               </button>
             )}
 
-            {/* Stroke width (stroke tab only) */}
-            {colorTarget === "stroke" && (
-              <div className="mt-3 pt-3 border-t border-gray-100">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs font-semibold text-gray-600">縁の太さ</p>
-                  <span className="text-xs text-gray-500 font-medium">
-                    {strokeWidth === 0 ? "なし" : `${strokeWidth} px`}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={20}
-                  step={1}
-                  value={strokeWidth}
-                  onChange={(e) => setStrokeWidth(Number(e.target.value))}
-                  className="w-full accent-indigo-500"
-                />
+            {/* Stroke width — always rendered to avoid layout shift */}
+            <div className={`mt-3 pt-3 border-t border-gray-100 ${colorTarget === "stroke" ? "" : "invisible h-0 mt-0 pt-0 border-0 overflow-hidden"}`}>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-semibold text-gray-600">縁の太さ</p>
+                <span className="text-xs text-gray-500 font-medium">
+                  {strokeWidth === 0 ? "なし" : `${strokeWidth} px`}
+                </span>
               </div>
-            )}
+              <input
+                type="range"
+                min={0}
+                max={20}
+                step={1}
+                value={strokeWidth}
+                onChange={(e) => setStrokeWidth(Number(e.target.value))}
+                className="w-full accent-indigo-500"
+              />
+            </div>
           </div>
         </section>
       </main>
