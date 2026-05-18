@@ -289,7 +289,7 @@ export default function EmojiMaker() {
 
       {/* モバイル: 2列グリッド(プレビュー|使用イメージ) + コントロール全幅
            デスクトップ: 3列グリッド [14rem | 1fr | 14rem] */}
-      <main className="flex-1 grid grid-cols-2 lg:grid-cols-[14rem_1fr_14rem] gap-6 p-6 max-w-5xl mx-auto w-full lg:items-start">
+      <main className="flex-1 grid grid-cols-2 lg:grid-cols-[14rem_1fr_14rem] gap-6 p-6 max-w-5xl mx-auto w-full">
 
           {/* 左: プレビュー */}
           <aside className="col-start-1 row-start-1">
@@ -342,7 +342,7 @@ export default function EmojiMaker() {
           </aside>
 
         {/* 中央: コントロール */}
-        <section className="col-span-2 row-start-2 lg:col-span-1 lg:col-start-2 lg:row-start-1 flex flex-col gap-5">
+        <section className="col-span-2 row-start-2 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:self-start flex flex-col gap-5">
           {/* Text input */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
             <label className="block text-sm font-semibold text-gray-700 mb-2">
