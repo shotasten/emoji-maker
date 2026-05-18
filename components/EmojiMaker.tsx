@@ -455,28 +455,27 @@ export default function EmojiMaker() {
                 透明
               </button>
             )}
-          </div>
 
-          {/* Stroke */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-gray-700">縁取り</p>
-              <span className="text-sm text-gray-500 font-medium">
-                {strokeWidth === 0 ? "なし" : `${strokeWidth} px`}
-              </span>
-            </div>
-            <input
-              type="range"
-              min={0}
-              max={20}
-              step={1}
-              value={strokeWidth}
-              onChange={(e) => setStrokeWidth(Number(e.target.value))}
-              className="w-full accent-indigo-500"
-            />
-            <p className="text-xs text-gray-400 mt-2">
-              縁の色は上の「縁色」タブで設定
-            </p>
+            {/* Stroke width (stroke tab only) */}
+            {colorTarget === "stroke" && (
+              <div className="mt-3 pt-3 border-t border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-semibold text-gray-600">縁の太さ</p>
+                  <span className="text-xs text-gray-500 font-medium">
+                    {strokeWidth === 0 ? "なし" : `${strokeWidth} px`}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={20}
+                  step={1}
+                  value={strokeWidth}
+                  onChange={(e) => setStrokeWidth(Number(e.target.value))}
+                  className="w-full accent-indigo-500"
+                />
+              </div>
+            )}
           </div>
         </section>
       </main>
