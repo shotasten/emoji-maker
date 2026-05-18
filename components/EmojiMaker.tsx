@@ -144,9 +144,9 @@ export default function EmojiMaker() {
 
   const [text, setText] = useState("絵文字\nメーカー");
   const [fontId, setFontId] = useState<FontId>("rounded");
-  const [textColor, setTextColor] = useState("#EC4899");
+  const [textColor, setTextColor] = useState("#06B6D4");
   const [bgColor, setBgColor] = useState("");
-  const [strokeColor, setStrokeColor] = useState("#06B6D4");
+  const [strokeColor, setStrokeColor] = useState("#000000");
   const [strokeWidth, setStrokeWidth] = useState(0);
   const [previewUrl, setPreviewUrl] = useState("");
 
@@ -173,14 +173,15 @@ export default function EmojiMaker() {
 
   useEffect(() => {
     document.fonts.ready.then(async () => {
+      const sampleColors = ["#EC4899", "#06B6D4"];
       const results: Record<string, string[]> = {};
       for (const font of FONTS) {
         const urls: string[] = [];
-        for (const sample of FONT_SAMPLES) {
+        for (let i = 0; i < FONT_SAMPLES.length; i++) {
           const cv = document.createElement("canvas");
           await renderEmoji(cv, {
-            text: sample, fontFamily: font.css, fontWeight: font.ctxWeight,
-            bgColor: "", textColor: "#1F2937", strokeWidth: 0, strokeColor: "#000000",
+            text: FONT_SAMPLES[i], fontFamily: font.css, fontWeight: font.ctxWeight,
+            bgColor: "", textColor: sampleColors[i], strokeWidth: 0, strokeColor: "#000000",
           });
           urls.push(cv.toDataURL("image/png"));
         }
