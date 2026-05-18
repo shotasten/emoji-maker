@@ -412,7 +412,7 @@ export default function EmojiMaker() {
             </div>
 
             {/* Template swatches */}
-            <div className="grid grid-cols-5 gap-1.5 mb-3">
+            <div className="flex gap-1 mb-3">
               {TEMPLATE_COLORS.map((c) => {
                 const isSelected = currentTargetColor === c.value;
                 return (
@@ -420,7 +420,7 @@ export default function EmojiMaker() {
                     key={c.value}
                     title={c.name}
                     onClick={() => applyColor(c.value)}
-                    className={`aspect-square rounded-xl border-2 transition shadow-sm ${
+                    className={`flex-1 aspect-square rounded-md border-2 transition shadow-sm ${
                       isSelected
                         ? "border-indigo-500 scale-110 shadow-md"
                         : "border-gray-200 hover:scale-105"
