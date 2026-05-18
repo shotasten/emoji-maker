@@ -110,7 +110,7 @@ export default function ColorPicker({ value, onChange }: Props) {
         ref={svRef}
         className="relative rounded-lg overflow-hidden cursor-crosshair select-none touch-none"
         style={{
-          height: 120,
+          height: 100,
           background: [
             "linear-gradient(to bottom, transparent 0%, #000 100%)",
             `linear-gradient(to right, #fff 0%, hsl(${h}, 100%, 50%) 100%)`,
