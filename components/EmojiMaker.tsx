@@ -6,11 +6,13 @@ import ColorPicker from "@/components/ColorPicker";
 import SlackRegister from "@/components/SlackRegister";
 
 const FONTS = [
-  { id: "rounded", name: "丸ゴシック体", subname: "M PLUS Rounded 1c", css: "M PLUS Rounded 1c", ctxWeight: "900", recommended: true },
-  { id: "mincho", name: "明朝体", subname: "Shippori Mincho B1", css: "Shippori Mincho B1", ctxWeight: "800" },
-  { id: "block", name: "ブロック体", subname: "Dela Gothic One", css: "Dela Gothic One", ctxWeight: "400" },
+  { id: "rounded", name: "丸ゴシック体", css: "M PLUS Rounded 1c", ctxWeight: "900", recommended: true },
+  { id: "mincho", name: "明朝体", css: "Shippori Mincho B1", ctxWeight: "800" },
+  { id: "block", name: "ブロック体", css: "Dela Gothic One", ctxWeight: "400" },
   { id: "tanuki", name: "たぬき油性マジック", css: "TanukiMagic", ctxWeight: "normal" },
 ] as const;
+
+const FONT_SAMPLES = ["あり\nがと", "感謝"] as const;
 
 type FontId = (typeof FONTS)[number]["id"];
 type ColorTarget = "text" | "bg" | "stroke";
@@ -149,6 +151,7 @@ export default function EmojiMaker() {
   const [previewUrl, setPreviewUrl] = useState("");
 
   const [colorTarget, setColorTarget] = useState<ColorTarget>("text");
+  const [fontPreviews, setFontPreviews] = useState<Record<string, string[]>>({});
 
   const selectedFont = FONTS.find((f) => f.id === fontId)!;
   const fontFamily = selectedFont.css;
@@ -166,6 +169,26 @@ export default function EmojiMaker() {
   useEffect(() => {
     document.fonts.ready.then(render);
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    document.fonts.ready.then(async () => {
+      const sampleColors = ["#EC4899", "#06B6D4"];
+      const results: Record<string, string[]> = {};
+      for (const font of FONTS) {
+        const urls: string[] = [];
+        for (let i = 0; i < FONT_SAMPLES.length; i++) {
+          const cv = document.createElement("canvas");
+          await renderEmoji(cv, {
+            text: FONT_SAMPLES[i], fontFamily: font.css, fontWeight: font.ctxWeight,
+            bgColor: "", textColor: sampleColors[i], strokeWidth: 0, strokeColor: "#000000",
+          });
+          urls.push(cv.toDataURL("image/png"));
+        }
+        results[font.id] = urls;
+      }
+      setFontPreviews(results);
+    });
   }, []);
 
   // Dynamic favicon — generated with canvas after fonts load for correct rendering
@@ -289,9 +312,6 @@ export default function EmojiMaker() {
                 </div>
                 <div className="text-center leading-tight">
                   <p className="text-xs text-gray-400">フォント：<span className="whitespace-nowrap">{selectedFont.name}</span></p>
-                  {"subname" in selectedFont && (
-                    <p className="text-xs text-gray-400 whitespace-nowrap">（{selectedFont.subname}）</p>
-                  )}
                 </div>
                 <button
                   onClick={handleDownload}
@@ -339,37 +359,31 @@ export default function EmojiMaker() {
 
           {/* Font */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-            <p className="text-sm font-semibold text-gray-700 mb-3">フォント</p>
-            <div className="flex flex-col gap-2">
+            <p className="text-sm font-semibold text-gray-700 mb-2">フォント</p>
+            <div className="grid grid-cols-4 gap-2">
               {FONTS.map((f) => (
                 <button
                   key={f.id}
                   onClick={() => setFontId(f.id)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition text-left ${
+                  className={`flex flex-col items-center gap-1.5 p-2 rounded-xl border-2 transition ${
                     fontId === f.id
                       ? "border-indigo-400 bg-indigo-50"
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
                 >
-                  <span
-                    className="text-2xl leading-none"
-                    style={{ fontFamily: f.css, fontWeight: f.ctxWeight }}
-                  >
-                    あA
-                  </span>
-                  <span className="text-sm text-gray-700 font-medium flex items-center gap-1.5">
+                  <div className="flex gap-1">
+                    {FONT_SAMPLES.map((_, i) => (
+                      fontPreviews[f.id]?.[i]
+                        ? <img key={i} src={fontPreviews[f.id][i]} className={`w-9 h-9 rounded${i === 1 ? " hidden sm:block" : ""}`} alt="" />
+                        : <div key={i} className={`w-9 h-9 rounded bg-gray-100 animate-pulse${i === 1 ? " hidden sm:block" : ""}`} />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-700 font-medium text-center leading-tight">
                     {f.name}
                     {"recommended" in f && f.recommended && (
-                      <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
-                        おすすめ
-                      </span>
+                      <span className="block text-amber-500">おすすめ</span>
                     )}
                   </span>
-                  {fontId === f.id && (
-                    <span className="ml-auto text-indigo-500 text-xs font-semibold flex-shrink-0">
-                      選択中
-                    </span>
-                  )}
                 </button>
               ))}
             </div>
@@ -412,7 +426,7 @@ export default function EmojiMaker() {
             </div>
 
             {/* Template swatches */}
-            <div className="grid grid-cols-5 gap-2 mb-4">
+            <div className="flex gap-1 mb-3">
               {TEMPLATE_COLORS.map((c) => {
                 const isSelected = currentTargetColor === c.value;
                 return (
@@ -420,7 +434,7 @@ export default function EmojiMaker() {
                     key={c.value}
                     title={c.name}
                     onClick={() => applyColor(c.value)}
-                    className={`aspect-square rounded-xl border-2 transition shadow-sm ${
+                    className={`flex-1 aspect-square rounded-md border-2 transition shadow-sm ${
                       isSelected
                         ? "border-indigo-500 scale-110 shadow-md"
                         : "border-gray-200 hover:scale-105"
@@ -455,6 +469,7 @@ export default function EmojiMaker() {
                 透明
               </button>
             )}
+
           </div>
 
           {/* Stroke */}
@@ -474,9 +489,7 @@ export default function EmojiMaker() {
               onChange={(e) => setStrokeWidth(Number(e.target.value))}
               className="w-full accent-indigo-500"
             />
-            <p className="text-xs text-gray-400 mt-2">
-              縁の色は上の「縁色」タブで設定
-            </p>
+            <p className="text-xs text-gray-400 mt-2">縁の色は上の「縁色」タブで設定</p>
           </div>
         </section>
       </main>
