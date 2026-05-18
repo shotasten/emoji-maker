@@ -127,7 +127,7 @@ export default function SlackRegister({ canvasRef, defaultName = "" }: Props) {
       {!extInstalled && (
         <p className="text-[11px] text-gray-400 text-center leading-snug">
           <a
-            href="https://github.com/shotasten/emoji-maker-chrome-extension"
+            href="https://chromewebstore.google.com/detail/ojlgjoflihgjkgdmhhlpjhmlhjdpbikk"
             target="_blank"
             rel="noopener noreferrer"
             className="underline hover:text-gray-600"
