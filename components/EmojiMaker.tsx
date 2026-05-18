@@ -374,8 +374,8 @@ export default function EmojiMaker() {
                   <div className="flex gap-1">
                     {FONT_SAMPLES.map((_, i) => (
                       fontPreviews[f.id]?.[i]
-                        ? <img key={i} src={fontPreviews[f.id][i]} className="w-9 h-9 rounded" alt="" />
-                        : <div key={i} className="w-9 h-9 rounded bg-gray-100 animate-pulse" />
+                        ? <img key={i} src={fontPreviews[f.id][i]} className={`w-9 h-9 rounded${i === 1 ? " hidden sm:block" : ""}`} alt="" />
+                        : <div key={i} className={`w-9 h-9 rounded bg-gray-100 animate-pulse${i === 1 ? " hidden sm:block" : ""}`} />
                     ))}
                   </div>
                   <span className="text-xs text-gray-700 font-medium text-center leading-tight">
