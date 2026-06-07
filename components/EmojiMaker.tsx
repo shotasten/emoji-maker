@@ -495,10 +495,11 @@ export default function EmojiMaker() {
         </section>
       </main>
 
-      <footer className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-gray-400 py-4 border-t border-gray-100">
-        <span>© 2026 絵文字メーカー</span>
-        <Link href="/privacy" className="hover:text-gray-600 hover:underline">
-          プライバシーポリシー
+      <footer className="grid grid-cols-3 items-center text-xs text-gray-400 py-4 border-t border-gray-100">
+        <div />
+        <span className="text-center">© 2026 絵文字メーカー</span>
+        <Link href="/privacy" className="justify-self-end pr-4 hover:text-gray-600 hover:underline">
+          Privacy
         </Link>
       </footer>
     </div>
