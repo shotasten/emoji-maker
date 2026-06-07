@@ -37,3 +37,7 @@ npm run gen-og      # OGP画像
 ## デプロイ
 
 Cloudflare Pages。`main` push で自動デプロイ。
+
+## 広告
+
+Google AdSense の自動広告タグを `pages/_document.tsx` で `APP_ENV=prd` のときのみ全ページの `<head>` に出力します。Cloudflare Pages の Production 環境に `APP_ENV=prd` を設定し、Preview やローカルでは未設定のままにします。広告配信では Cookie などが利用される場合があります。

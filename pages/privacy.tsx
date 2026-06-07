@@ -33,6 +33,11 @@ export default function Privacy() {
             </p>
 
             <p>
+              このサイトでは Google Analytics によるアクセス解析と、Google AdSense による広告配信を行う場合があります。
+              これらのサービスは Cookie などを利用する場合がありますが、作成した絵文字画像の内容を取得することはありません。
+            </p>
+
+            <p>
               何か気になることがあれば{" "}
               <a
                 href="https://github.com/shotasten/emoji-maker-chrome-extension/issues"
