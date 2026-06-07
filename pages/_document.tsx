@@ -1,5 +1,7 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
+const shouldLoadAdsense = process.env.APP_ENV === "prd";
+
 export default function Document() {
   return (
     <Html lang="ja">
@@ -8,6 +10,13 @@ export default function Document() {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#FF2D78" />
+        {shouldLoadAdsense ? (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5169510031090776"
+            crossOrigin="anonymous"
+          />
+        ) : null}
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-FB8FMQ2MF6" />
         <script dangerouslySetInnerHTML={{ __html: `
