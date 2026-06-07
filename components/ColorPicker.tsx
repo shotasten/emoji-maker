@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { hexToHsv, hsvToHex } from "@/lib/color";
 
 interface Props {
@@ -9,40 +9,23 @@ interface Props {
 }
 
 export default function ColorPicker({ value, onChange }: Props) {
-  const [h, setH] = useState(0);
-  const [s, setS] = useState(1);
-  const [v, setV] = useState(1);
   const [hexInput, setHexInput] = useState("");
+  const [isEditingHex, setIsEditingHex] = useState(false);
 
-  const hRef = useRef(0);
-  const sRef = useRef(1);
-  const vRef = useRef(1);
-  const skipSync = useRef(false);
   const svRef = useRef<HTMLDivElement>(null);
   const hueRef = useRef<HTMLDivElement>(null);
-  const onChangeRef = useRef(onChange);
 
-  useEffect(() => { onChangeRef.current = onChange; });
-  useEffect(() => { hRef.current = h; }, [h]);
-  useEffect(() => { sRef.current = s; }, [s]);
-  useEffect(() => { vRef.current = v; }, [v]);
-
-  // Sync from external value change
-  useEffect(() => {
-    if (skipSync.current) { skipSync.current = false; return; }
-    if (!value) { setHexInput(""); return; }
-    const [nh, ns, nv] = hexToHsv(value);
-    setH(nh); setS(ns); setV(nv);
-    setHexInput(value.toUpperCase());
+  const [h, s, v] = useMemo(() => {
+    if (!value) return [0, 1, 1] as const;
+    return hexToHsv(value);
   }, [value]);
 
+  const displayedHex = isEditingHex ? hexInput : value.toUpperCase();
+
   const emit = useCallback((nh: number, ns: number, nv: number) => {
-    skipSync.current = true;
-    setH(nh); setS(ns); setV(nv);
     const hex = hsvToHex(nh, ns, nv);
-    setHexInput(hex.toUpperCase());
-    onChangeRef.current(hex);
-  }, []);
+    onChange(hex);
+  }, [onChange]);
 
   // SV gradient drag
   const onSvDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
@@ -50,21 +33,21 @@ export default function ColorPicker({ value, onChange }: Props) {
     e.currentTarget.setPointerCapture(e.pointerId);
     const rect = svRef.current.getBoundingClientRect();
     emit(
-      hRef.current,
+      h,
       Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)),
       Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height)),
     );
-  }, [emit]);
+  }, [emit, h]);
 
   const onSvMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (!(e.buttons & 1) || !svRef.current) return;
     const rect = svRef.current.getBoundingClientRect();
     emit(
-      hRef.current,
+      h,
       Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)),
       Math.max(0, Math.min(1, 1 - (e.clientY - rect.top) / rect.height)),
     );
-  }, [emit]);
+  }, [emit, h]);
 
   // Hue slider drag
   const onHueDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
@@ -73,23 +56,24 @@ export default function ColorPicker({ value, onChange }: Props) {
     const rect = hueRef.current.getBoundingClientRect();
     emit(
       Math.max(0, Math.min(360, ((e.clientX - rect.left) / rect.width) * 360)),
-      sRef.current,
-      vRef.current,
+      s,
+      v,
     );
-  }, [emit]);
+  }, [emit, s, v]);
 
   const onHueMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (!(e.buttons & 1) || !hueRef.current) return;
     const rect = hueRef.current.getBoundingClientRect();
     emit(
       Math.max(0, Math.min(360, ((e.clientX - rect.left) / rect.width) * 360)),
-      sRef.current,
-      vRef.current,
+      s,
+      v,
     );
-  }, [emit]);
+  }, [emit, s, v]);
 
   const handleHexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
+    setIsEditingHex(true);
     setHexInput(val);
     if (/^#[0-9a-fA-F]{6}$/.test(val)) {
       const [nh, ns, nv] = hexToHsv(val);
@@ -98,9 +82,8 @@ export default function ColorPicker({ value, onChange }: Props) {
   };
 
   const handleHexBlur = () => {
-    if (!/^#[0-9a-fA-F]{6}$/.test(hexInput)) {
-      setHexInput(value ? value.toUpperCase() : "");
-    }
+    setIsEditingHex(false);
+    setHexInput("");
   };
 
   return (
@@ -174,7 +157,7 @@ export default function ColorPicker({ value, onChange }: Props) {
         />
         <input
           type="text"
-          value={hexInput}
+          value={displayedHex}
           onChange={handleHexChange}
           onBlur={handleHexBlur}
           maxLength={7}

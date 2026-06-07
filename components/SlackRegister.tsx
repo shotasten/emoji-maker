@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 type Workspace = { id: string; name: string; domain: string };
 type Status = { type: "success" | "error"; message: string };
@@ -28,6 +28,36 @@ function sendToExt<T>(request: object, responseType: string): Promise<T> {
   });
 }
 
+function isSupportedBrowser(): boolean {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent;
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+  const isChromium = /Chrome\//.test(ua);
+  return !isMobile && isChromium;
+}
+
+function hasExtensionMarker(): boolean {
+  return (
+    typeof document !== "undefined" &&
+    document.documentElement.getAttribute("data-emoji-maker-ext") === "1"
+  );
+}
+
+function subscribeSupportedBrowser() {
+  return () => {};
+}
+
+function subscribeExtensionReady(onStoreChange: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const handler = (event: MessageEvent) => {
+    if (event.data?.source === "emoji-maker-ext" && event.data?.type === "READY") {
+      onStoreChange();
+    }
+  };
+  window.addEventListener("message", handler);
+  return () => window.removeEventListener("message", handler);
+}
+
 function sanitizeName(raw: string): string {
   const result = raw
     .replace(/\n/g, "-")
@@ -39,38 +69,29 @@ function sanitizeName(raw: string): string {
 }
 
 export default function SlackRegister({ canvasRef, defaultName = "" }: Props) {
-  const [supported, setSupported] = useState(false);
-  const [extInstalled, setExtInstalled] = useState(false);
+  const supported = useSyncExternalStore(
+    subscribeSupportedBrowser,
+    isSupportedBrowser,
+    () => false,
+  );
+  const extInstalled = useSyncExternalStore(
+    subscribeExtensionReady,
+    hasExtensionMarker,
+    () => false,
+  );
   const [open, setOpen] = useState(false);
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [selectedId, setSelectedId] = useState("");
-  const [emojiName, setEmojiName] = useState("");
+  const [emojiName, setEmojiName] = useState(() => sanitizeName(defaultName));
+  const [lastDefaultName, setLastDefaultName] = useState(defaultName);
   const [status, setStatus] = useState<Status | null>(null);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const ua = navigator.userAgent;
-    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
-    const isChromium = /Chrome\//.test(ua);
-    if (isMobile || !isChromium) return;
-    setSupported(true);
-
-    if (document.documentElement.getAttribute("data-emoji-maker-ext") === "1") {
-      setExtInstalled(true);
-    }
-    const handler = (event: MessageEvent) => {
-      if (event.data?.source === "emoji-maker-ext" && event.data?.type === "READY") {
-        setExtInstalled(true);
-      }
-    };
-    window.addEventListener("message", handler);
-    return () => window.removeEventListener("message", handler);
-  }, []);
-
-  useEffect(() => {
+  if (defaultName !== lastDefaultName) {
+    setLastDefaultName(defaultName);
     setEmojiName(sanitizeName(defaultName));
-  }, [defaultName]);
+  }
 
   const handleToggle = async () => {
     if (!extInstalled) return;
