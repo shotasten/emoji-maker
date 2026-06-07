@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { renderEmoji, CANVAS_SIZE } from "@/lib/renderer";
 import ColorPicker from "@/components/ColorPicker";
@@ -494,8 +495,12 @@ export default function EmojiMaker() {
         </section>
       </main>
 
-      <footer className="text-center text-xs text-gray-400 py-4 border-t border-gray-100">
-        © 2026 絵文字メーカー
+      <footer className="grid grid-cols-3 items-center text-xs text-gray-400 py-4 border-t border-gray-100">
+        <div />
+        <span className="text-center">© 2026 絵文字メーカー</span>
+        <Link href="/privacy" className="justify-self-end pr-4 hover:text-gray-600 hover:underline">
+          Privacy
+        </Link>
       </footer>
     </div>
   );
