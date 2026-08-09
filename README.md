@@ -18,8 +18,12 @@ Slack・Discord・Teams のカスタム絵文字をブラウザで作れるツ�
 ## 開発
 
 ```bash
+npm ci
 npm run dev
 ```
+
+依存関係を変更した場合は、`package.json` と `package-lock.json` を同じ変更に含めてください。
+依存関係のインストールには、lockfileを厳密に反映する `npm ci` を使用します。
 
 ## ビルド
 
