@@ -28,7 +28,7 @@ function sendToExt<T>(request: object, responseType: string): Promise<T> {
   });
 }
 
-function isSupportedBrowser(): boolean {
+export function isSupportedBrowser(): boolean {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent;
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
@@ -58,7 +58,7 @@ function subscribeExtensionReady(onStoreChange: () => void) {
   return () => window.removeEventListener("message", handler);
 }
 
-function sanitizeName(raw: string): string {
+export function sanitizeName(raw: string): string {
   const result = raw
     .replace(/\n/g, "-")
     .replace(/[^a-zA-Z0-9_-]/g, "")

@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "audit": "npm audit --audit-level=high",
     "gen-icons": "node scripts/gen-icons.mjs",
     "gen-og": "node scripts/gen-og.mjs"
   },
@@ -22,11 +25,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "canvas": "^3.2.3",
-    "eslint": "^10",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.3.0",
     "sharp": "0.35.3",
     "tailwindcss": "^4",
-    "typescript": "^7",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.7",
     "wawoff2": "^2.0.1"
   }
 }
